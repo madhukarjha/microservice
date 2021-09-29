@@ -1,0 +1,1 @@
+https://github.com/stemmlerjs/simple-typescript-starter
