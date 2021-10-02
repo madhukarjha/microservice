@@ -1,0 +1,100 @@
+import level from "level"; //https://www.npmjs.com/package/levelup
+//const leveldown = require("leveldown"); //https://www.npmjs.com/package/leveldown
+import sublevel from "level-sublevel";
+//import isEmpty from "lodash";
+
+const dbPath = `./db`;
+
+/*
+ * [function]       cb
+ * @param {Error}   err
+ * @param {string}  success
+ *
+ * description: An empty error is emitted in levelup node module. It causes problems with Jest. This is likely a bug with levelup. It happens on line 60 in node_modules/levelup/lib/levelup.js.
+ *        To avoid triggering Jest errors, provide this callback function.
+ */
+
+// Instantiate db with collections
+var db = sublevel(level(dbPath,{valueEncoding: 'json'}))
+const loginsdb = db.sublevel("logins");
+const usersdb = db.sublevel("users");
+
+//loginsdb.put('1', {"username": "madhukar", "password": "123456"}, function(err, data){
+  loginsdb.get('1', function(err,logins){
+    console.dir(logins);
+  })
+//});
+
+// /*
+//  * [function]       put()
+//  * @param {string}  collection      name of collection to insert document
+//  * @param {string}  key             unique identifier to retrive document
+//  * @param {any}     value           data to store in document, typically string or object
+//  */
+
+// const insertOne = async (collection, data, key) => {
+//   try {
+//     if (isEmpty(collection)) throw Error("Provide collection name");
+//     return await db[collection].put(data[key], JSON.stringify(data));
+//   } catch (err) {
+//     return err;
+//   }
+// };
+
+// /*
+//  * [function]       get()
+//  * @param {string}  collection      name of collection where document is located
+//  * @param {string}  key             unique identifier to retrive document
+//  */
+
+// const findOne = async (collection, query, key) => {
+//   try {
+//     if (isEmpty(collection) || isEmpty(query))
+//       throw Error("Provide collection and key");
+
+//     const data = await db[collection].get(query[key], { asBuffer: false });
+//     const dataObject = JSON.parse(data);
+
+//     return dataObject;
+//   } catch (err) {
+//     return err;
+//   }
+// };
+
+// /*
+//  * [function]       del()
+//  * @param {string}  collection      name of collection where document is located
+//  * @param {string}  key             unique identifier of document
+//  */
+
+// const del = async (collection, key) => {
+//   try {
+//     if (isEmpty(collection) || isEmpty(key))
+//       throw Error("Provide collection and key");
+//     return await db[collection].del(key);
+//   } catch (err) {
+//     return err;
+//   }
+// };
+
+// /*
+//  * [function]       put()
+//  * @param {string}  collection      name of collection to insert document
+//  * @param {string}  key             unique identifier to retrive document
+//  * @param {any}     value           data to merge into document, typically string or object
+//  */
+
+// const updateOne = async (collection, query, data, key) => {
+//   try {
+//     if (isEmpty(collection) || isEmpty(query))
+//       throw Error("Provide collection and query");
+//     if (isEmpty(key)) throw Error("Provide key to match in collection");
+//     const doc = await findOne(collection, query, key);
+//     const combined = { ...doc, ...data };
+//     return await insertOne(collection, combined, key);
+//   } catch (err) {
+//     return err;
+//   }
+// };
+
+//module.exports = { insertOne, updateOne, findOne, del };
